@@ -112,11 +112,11 @@ local function AddToggle(tab, data)
 end
 --kosong
 AddToggle(mainTab, {
-	Name = "Anti Steal",
+	Name = "Auto Steal",
 	Default = false,
 	Callback = function(v)
 		if v then
-			loadstring(game:HttpGet("https://pastebin.com/raw/igcMURtT"))()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/evr-hub/evrhub-/refs/heads/main/AutoSteal"))()
 			task.delay(0.2, function()
 				if getgenv().activateProtection then
 					getgenv().activateProtection()
