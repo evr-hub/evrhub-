@@ -1,0 +1,549 @@
+local CoreGui = game:GetService("CoreGui") 
+if CoreGui:FindFirstChild("evrhub") then
+    CoreGui.evrhub:Destroy()
+end
+local gui = Instance.new("ScreenGui", CoreGui)
+gui.Name = "evrhub"
+gui.ResetOnSpawn = false
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 220, 0, 230)
+mainFrame.Position = UDim2.new(0.5, -110, 0.5, -130)
+mainFrame.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
+mainFrame.Parent = gui
+mainFrame.Active = true
+mainFrame.Draggable = true
+mainFrame.Visible = false
+Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 10)
+local stroke = Instance.new("UIStroke", mainFrame)
+stroke.Thickness = 2
+stroke.Color = Color3.fromRGB(100, 100, 100)
+stroke.Transparency = 0
+local shadow = Instance.new("ImageLabel", mainFrame)
+shadow.AnchorPoint = Vector2.new(0.5, 0.5)
+shadow.Position = UDim2.new(0.5, 0, 0.5, 0)
+shadow.Size = UDim2.new(1, 20, 1, 20)
+shadow.Image = "rbxassetid://5028857084"
+shadow.ImageColor3 = Color3.new(0, 0, 0)
+shadow.ImageTransparency = 0.7
+shadow.ScaleType = Enum.ScaleType.Slice
+shadow.SliceCenter = Rect.new(24, 24, 276, 276)
+shadow.BackgroundTransparency = 1
+shadow.ZIndex = 0
+local title = Instance.new("TextLabel", mainFrame)
+title.Size = UDim2.new(1, 0, 0, 28)
+title.BackgroundTransparency = 1
+title.Text = "EVR Hub"
+title.Font = Enum.Font.GothamBold
+title.TextSize = 13
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+local tabContainer = Instance.new("Frame", mainFrame)
+tabContainer.Size = UDim2.new(1, -16, 0, 24)
+tabContainer.Position = UDim2.new(0, 8, 0, 30)
+tabContainer.BackgroundTransparency = 1
+local tabLayout = Instance.new("UIListLayout", tabContainer)
+tabLayout.FillDirection = Enum.FillDirection.Horizontal
+tabLayout.Padding = UDim.new(0, 5)
+tabLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+local contentFrame = Instance.new("Frame", mainFrame)
+contentFrame.Position = UDim2.new(0, 8, 0, 60)
+contentFrame.Size = UDim2.new(1, -16, 1, -70)
+contentFrame.BackgroundTransparency = 1
+local tabs = {}
+local function createTab(name)
+	local tab = Instance.new("Frame", contentFrame)	tab.Size = UDim2.new(1, 0, 1, 0)
+	tab.BackgroundTransparency = 1
+	tab.Visible = false
+	local layout = Instance.new("UIListLayout", tab)
+	layout.Padding = UDim.new(0, 6)
+	layout.VerticalAlignment = Enum.VerticalAlignment.Top
+	layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+	tabs[name] = tab
+	return tab
+end
+local mainTab = createTab("Main")
+local visualTab = createTab("Visual")
+local miscTab = createTab("Misc")
+local function switchTab(name)
+	for tabName, tab in pairs(tabs) do
+		tab.Visible = (tabName == name)
+	end
+end
+local function createTabButton(text, tabName)
+	local btn = Instance.new("TextButton", tabContainer)
+	btn.Size = UDim2.new(0, 60, 0, 22)
+	btn.Text = text
+	btn.Font = Enum.Font.Gotham
+	btn.TextSize = 13
+	btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+	btn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+	Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 6)
+	btn.MouseButton1Click:Connect(function()
+		switchTab(tabName)
+	end)
+end
+createTabButton("Main", "Main")
+createTabButton("Visual", "Visual")
+createTabButton("Misc", "Misc")
+local function AddToggle(tab, data)
+	local btn = Instance.new("TextButton", tab)
+	btn.Size = UDim2.new(1, -10, 0, 28)
+	btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+	btn.TextColor3 = Color3.fromRGB(230, 230, 230)
+	btn.Font = Enum.Font.Gotham
+	btn.TextSize = 15
+	btn.TextXAlignment = Enum.TextXAlignment.Left
+	btn.Text = data.Name
+	btn.AutoButtonColor = false
+	Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 8)
+	local toggle = Instance.new("Frame", btn)
+	toggle.Size = UDim2.new(0, 12, 0, 12)
+	toggle.Position = UDim2.new(1, -20, 0.5, -6)
+	toggle.BackgroundColor3 = Color3.fromRGB(130, 130, 130)
+	toggle.BorderSizePixel = 0
+	Instance.new("UICorner", toggle).CornerRadius = UDim.new(1, 0)
+	local state = false
+	btn.MouseButton1Click:Connect(function()
+		state = not state
+		toggle.BackgroundColor3 = state and Color3.fromRGB(0, 200, 100) or Color3.fromRGB(130, 130, 130)
+		if data.Callback then
+			data.Callback(state)
+		end
+	end)
+end
+--kosong
+AddToggle(mainTab, {
+	Name = "Anti Steal",
+	Default = false,
+	Callback = function(v)
+		if v then
+			loadstring(game:HttpGet("https://pastebin.com/raw/igcMURtT"))()
+			task.delay(0.2, function()
+				if getgenv().activateProtection then
+					getgenv().activateProtection()
+				end
+			end)
+		else
+			if getgenv().deactivateProtection then
+				getgenv().deactivateProtection()
+			end
+		end
+	end
+})
+local enabled = false
+AddToggle(mainTab, {
+	Name = "lock base",
+	Default = false,
+	Callback = function(v)
+		enabled = v
+		if v then
+			-- toggle eksekusi
+     loadstring(game:HttpGet("https://pastebin.com/raw/makzCS0N"))()
+loadstring(game:HttpGet("https://pastefy.app/cWDdf5Fl/raw"))()
+		end
+	end
+})
+local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+local ESPConnections = {}
+local ESPActive = false
+local function createESP(player)
+	if player == localPlayer then return end
+	local function onCharacterAdded(character)
+		local head = character:WaitForChild("Head", 5)
+		if not head then return end
+		
+		if head:FindFirstChild("ESP_Name") then head:FindFirstChild("ESP_Name"):Destroy() end
+		if character:FindFirstChild("ESP_Highlight") then character:FindFirstChild("ESP_Highlight"):Destroy() end
+		
+		local billboard = Instance.new("BillboardGui")
+		billboard.Name = "ESP_Name"
+		billboard.Adornee = head
+		billboard.Size = UDim2.new(0, 100, 0, 40)
+		billboard.StudsOffset = Vector3.new(0, 1.5, 0)
+		billboard.AlwaysOnTop = true
+		billboard.Parent = head
+		local label = Instance.new("TextLabel")
+		label.Size = UDim2.new(1, 0, 1, 0)
+		label.BackgroundTransparency = 1
+		label.Text = player.Name
+		label.TextColor3 = Color3.new(1, 1, 1)
+		label.TextStrokeTransparency = 0.5
+		label.Font = Enum.Font.SourceSansBold
+		label.TextScaled = true
+		label.Parent = billboard
+		
+		local highlight = Instance.new("Highlight")
+		highlight.Name = "ESP_Highlight"
+		highlight.Adornee = character
+		highlight.FillColor = Color3.new(1, 0, 0)
+		highlight.FillTransparency = 0.5
+		highlight.OutlineColor = Color3.new(0, 0, 0)
+		highlight.OutlineTransparency = 0.2
+		highlight.Parent = character
+	end
+		if player.Character then onCharacterAdded(player.Character) end
+	local charConnect = player.CharacterAdded:Connect(onCharacterAdded)
+	
+	ESPConnections[player] = charConnect
+end
+local function clearAllESP()
+	for _, player in ipairs(Players:GetPlayers()) do
+		if player ~= localPlayer then
+			local character = player.Character
+			if character then
+				if character:FindFirstChild("ESP_Highlight") then
+					character.ESP_Highlight:Destroy()
+				end
+				if character:FindFirstChild("Head") and character.Head:FindFirstChild("ESP_Name") then
+					character.Head.ESP_Name:Destroy()
+				end
+			end
+			if ESPConnections[player] then
+				ESPConnections[player]:Disconnect()
+				ESPConnections[player] = nil
+			end
+		end
+	end
+end
+AddToggle(mainTab, {
+	Name = "Esp Player",
+	Callback = function(v)
+		ESPActive = v
+		print("ESP Player:", v)
+		if v then
+			
+			for _, player in ipairs(Players:GetPlayers()) do
+				createESP(player)
+			end
+			
+			ESPConnections["_PlayerAdded"] = Players.PlayerAdded:Connect(function(player)
+				createESP(player)
+			end)
+		else
+			
+			clearAllESP()
+			if ESPConnections["_PlayerAdded"] then
+				ESPConnections["_PlayerAdded"]:Disconnect()
+				ESPConnections["_PlayerAdded"] = nil
+			end
+		end
+	end
+})
+AddToggle(mainTab, {
+	Name = "ESP Target",
+	Default = false,
+	Callback = function(v)
+		if v then
+     loadstring(game:HttpGet("https://raw.githubusercontent.com/bananaGanteng/Legend/refs/heads/main/Target%20Model%20Name"))()
+			task.delay(0.1, function()
+				if getgenv().activateESP then
+					getgenv().activateESP()
+				end
+			end)
+		else
+			if getgenv().disableESP then
+				getgenv().disableESP()
+			end
+		end
+	end
+})
+local enabled = false
+AddToggle(visualTab, {
+	Name = "Instant Steal",
+	Default = false,
+	Callback = function(v)
+		enabled = v
+		if v then
+     
+     loadstring(game:HttpGet("https://raw.githubusercontent.com/Youifpg/Steal-a-Brianrot/refs/heads/main/ArbixHubBEST.lua"))()
+		end
+	end
+})
+local boostedJump = 130  
+local normalJump = 50  
+local isEnabled = false   
+local Players = game:GetService("Players")  
+local player = Players.LocalPlayer  
+local function applyJumpPower(humanoid)  
+	if humanoid then  
+		humanoid.UseJumpPower = true  
+		humanoid.JumpPower = isEnabled and boostedJump or normalJump  
+	end  
+end  
+local function onCharacterAdded(character)  
+	local humanoid = character:WaitForChild("Humanoid")  
+	applyJumpPower(humanoid)  
+end  
+player.CharacterAdded:Connect(onCharacterAdded)  
+if player.Character then  
+	onCharacterAdded(player.Character)  
+end  
+AddToggle(visualTab, {  
+	Name = "JumpBooster",  
+	Default = false,  
+	Callback = function(state)  
+		isEnabled = state   
+		print("JumpBooster:", state)  
+		local character = player.Character  
+		if character then  
+			local humanoid = character:FindFirstChild("Humanoid")  
+			if humanoid then  
+				applyJumpPower(humanoid)  
+			end  
+		end  
+	end  
+}) 
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+local boostedSpeed = 40
+local normalSpeed = 38
+local enforceConnection
+local speedBoosterAktif = false
+local function enforceSpeed(humanoid)
+if enforceConnection then
+enforceConnection:Disconnect()
+end
+enforceConnection = RunService.Heartbeat:Connect(function()
+if humanoid and humanoid.WalkSpeed ~= boostedSpeed then
+humanoid.WalkSpeed = boostedSpeed
+end
+end)
+humanoid:GetPropertyChangedSignal("WalkSpeed"):Connect(function()  
+	if speedBoosterAktif and humanoid.WalkSpeed ~= boostedSpeed then  
+		humanoid.WalkSpeed = boostedSpeed  
+	end  
+end)
+end
+local function aktifkanSpeedBooster()
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+enforceSpeed(humanoid)
+end
+local function nonaktifkanSpeedBooster()
+if enforceConnection then
+enforceConnection:Disconnect()
+enforceConnection = nil
+end
+local character = player.Character
+if character then
+local humanoid = character:FindFirstChildOfClass("Humanoid")
+if humanoid then
+humanoid.WalkSpeed = normalSpeed
+end
+end
+end
+player.CharacterAdded:Connect(function()
+if speedBoosterAktif then
+aktifkanSpeedBooster()
+end
+end)
+AddToggle(visualTab, {
+Name = "Speed Booster",
+Default = false,
+Callback = function(v)
+speedBoosterAktif = v
+if v then
+aktifkanSpeedBooster()
+print("âœ… Speed Booster AKTIF (WalkSpeed = " .. boostedSpeed .. ")")
+else
+nonaktifkanSpeedBooster()
+print("â›” Speed Booster NONAKTIF (WalkSpeed kembali ke " .. normalSpeed .. ")")
+end
+end
+})
+AddToggle(miscTab, {
+	Name = "Teleport Shop",
+	Callback = function(v)
+		if v then
+			local player = game.Players.LocalPlayer
+			local character = player.Character or player.CharacterAdded:Wait()
+			local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+			local cf = CFrame.new(
+				-378.420959, -6.25197887, 59.4905052,
+				0.106838159, -1.85177775e-08, 0.994276404,
+				1.08971683e-07, 1, 6.91502233e-09,
+				-0.994276404, 1.07609189e-07, 0.106838159
+			)
+			humanoidRootPart.CFrame = cf
+			humanoidRootPart.Anchored = true
+			print("works")
+			task.delay(2, function()
+				humanoidRootPart.Anchored = false
+				print("failed")
+			end)
+		end
+	end
+})
+AddToggle(miscTab, {
+	Name = "Rejoin",
+	Callback = function(v)
+		print("rejoin:", v)
+		if v then
+			local TeleportService = game:GetService("TeleportService")
+			local Players = game:GetService("Players")
+			local player = Players.LocalPlayer
+			local placeId = game.PlaceId
+			local jobId = game.JobId
+			
+			TeleportService:TeleportToPlaceInstance(placeId, jobId, player)
+		end
+	end
+})
+AddToggle(miscTab, {
+	Name = "Server hop",
+	Callback = function(v)
+		print("server lain:", v)
+		if v then
+			local HttpService = game:GetService("HttpService")
+			local TeleportService = game:GetService("TeleportService")
+			local Players = game:GetService("Players")
+			local player = Players.LocalPlayer
+			-- Fungsi untuk mencari dan teleport ke server lain
+			local function serverHop()
+				local url = string.format("https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=Asc&limit=100", game.PlaceId)
+				local success, result = pcall(function()
+					return game:HttpGet(url)
+				end)
+				if success then
+					local data = HttpService:JSONDecode(result)
+					for _, server in pairs(data.data) do
+						if server.playing < server.maxPlayers and server.id ~= game.JobId then
+							TeleportService:TeleportToPlaceInstance(game.PlaceId, server.id, player)
+							break
+						end
+					end
+				end
+			end
+			for i = 1, 20 do
+				task.wait(0.1) -- jeda 1 detik agar tidak terlalu cepat
+				serverHop()
+			end
+		end
+	end
+})
+local TweenService = game:GetService("TweenService")
+local toggleBtn = Instance.new("ImageButton", gui)
+toggleBtn.Name = "HoverButton"
+toggleBtn.Size = UDim2.new(0, 55, 0, 55)
+toggleBtn.Position = UDim2.new(0, 10, 0.2, 0)
+toggleBtn.Image = "rbxassetid://EVR_IMAGE_ID"
+toggleBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+toggleBtn.BackgroundTransparency = 0.7
+toggleBtn.Active = true
+toggleBtn.Draggable = true
+Instance.new("UICorner", toggleBtn).CornerRadius = UDim.new(0, 9)
+local stroke = Instance.new("UIStroke")
+stroke.Parent = toggleBtn
+stroke.Thickness = 2
+stroke.Color = Color3.fromRGB(255, 255, 255)
+stroke.Transparency = 0.3 
+stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+toggleBtn.MouseEnter:Connect(function()
+	TweenService:Create(toggleBtn, TweenInfo.new(0.15), {
+		Size = UDim2.new(0, 60, 0, 60)
+	}):Play()
+end)
+toggleBtn.MouseLeave:Connect(function()
+	TweenService:Create(toggleBtn, TweenInfo.new(0.15), {
+		Size = UDim2.new(0, 55, 0, 55)
+	}):Play()
+end)
+local isOpen = false
+toggleBtn.MouseButton1Click:Connect(function()
+	isOpen = not isOpen
+	mainFrame.Visible = isOpen
+end)
+switchTab("Main")
+local function processBillboardIfNeeded(obj)
+	if obj:IsA("BasePart") and obj.Name == "Main" then
+		local parent = obj.Parent
+		while parent do
+			if parent:IsA("Folder") and parent.Name == "Purchases" then
+				for _, child in ipairs(obj:GetChildren()) do
+					if child:IsA("BillboardGui") then
+						child.Size = UDim2.new(0, 180, 0, 150)
+						child.MaxDistance = 90
+						child.StudsOffset = Vector3.new(0, 5, 0)
+						print("âœ… BillboardGui diubah:", obj:GetFullName())
+					end
+				end
+				break
+			end
+			parent = parent.Parent
+		end
+	end
+end
+for _, obj in ipairs(workspace:GetDescendants()) do
+	processBillboardIfNeeded(obj)
+end
+workspace.DescendantAdded:Connect(function(obj)
+	processBillboardIfNeeded(obj)
+end)
+--pesan
+game.StarterGui:SetCore("SendNotification", {
+    Title = "active Script";
+    Text = "anti Ragdoll on anti Trap on";
+    Duration = 10;
+})
+-- ðŸ”¥ AUTO HAPUS MODEL "Trap"
+local function removeTouchInterestInOpen()
+    for _, obj in pairs(game:GetDescendants()) do
+        if obj:IsA("TouchTransmitter") and obj.Name == "TouchInterest" then
+            local parent = obj.Parent
+            if parent and parent:IsA("MeshPart") and parent.Name == "Open" then
+                local model = parent:FindFirstAncestorOfClass("Model")
+                if model and model.Name == "Trap" then
+                    obj:Destroy()
+                    print("ðŸ”¥ TouchInterest Dihapus dari:", parent:GetFullName())
+                end
+            end
+        end
+    end
+end
+removeTouchInterestInOpen()
+game.DescendantAdded:Connect(function(obj)
+    if obj:IsA("TouchTransmitter") and obj.Name == "TouchInterest" then
+        local parent = obj.Parent
+        if parent and parent:IsA("MeshPart") and parent.Name == "Open" then
+            local model = parent:FindFirstAncestorOfClass("Model")
+            if model and model.Name == "Trap" then
+                obj:Destroy()
+                print("ðŸ”¥ TouchInterest Dihapus Saat Spawn dari:", parent:GetFullName())
+            end
+        end
+    end
+end)
+--anti ragdol aktif
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local ragdollConnection = nil
+local function anchorCharacter(char, state)
+	for _, part in pairs(char:GetDescendants()) do
+		if part:IsA("BasePart") and part.Name ~= "HumanoidRootPart" then
+			part.Anchored = state
+		end
+	end
+end
+local function handleRagdoll(char)
+	local humanoid = char:WaitForChild("Humanoid", 5)
+	if not humanoid then return end
+	
+	ragdollConnection = humanoid.StateChanged:Connect(function(_, newState)
+		if newState == Enum.HumanoidStateType.Physics 
+		or newState == Enum.HumanoidStateType.Ragdoll 
+		or newState == Enum.HumanoidStateType.FallingDown then
+			anchorCharacter(char, true)
+			task.wait(0.01)
+			anchorCharacter(char, false)
+			humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+		end
+	end)
+end
+if player.Character then
+	handleRagdoll(player.Character)
+end
+player.CharacterAdded:Connect(function(char)
+	task.wait(0.5)
+	handleRagdoll(char)
+end)
