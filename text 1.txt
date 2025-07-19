@@ -1078,7 +1078,7 @@ end
 local translations = {
 ["en"] = {
 Title = "Steal Helper",
-Teleport = "Teleport To Sky",
+Teleport = "Teleport To Sky | Semi-Patched",
 Tween = "Tween To Base",
 Warning = "Please click Tween To Base ONLY when you're on top of your base."
 },
@@ -1204,7 +1204,7 @@ TPButton.MouseButton1Click:Connect(teleportToSky)
 TweenButton.MouseButton1Click:Connect(tweenToBase)
 return stealhelper
 end
-local W=WindUI:CreateWindow{Title="Steal A Brainrot | Makal Hub",Icon="sparkles",IconThemed=true,Author="Makal Hub",Folder="Makal Hub",Theme="Dark",Transparent=true,Size=UDim2.fromOffset(600,300),Configuration={Enabled=True,FileName="stealabrainrot"},Discord={Enabled=true,Invite="N3eDFJ9UCF"},KeySystem=false}
+local W=WindUI:CreateWindow{Title="Steal A Brainrot | CX8 HUB Hub",Icon="sparkles",IconThemed=true,Author="CX8 HUB",Folder="CX8 HUB",Theme="Dark",Transparent=true,Size=UDim2.fromOffset(600,300),Configuration={Enabled=True,FileName="stealabrainrot"},Discord={Enabled=true,Invite="UUjqdKqh"},KeySystem=false}
 local Tab=W:Tab{Title="Main",Icon="house"}
 local T2 = W:Tab{Title="Visuals",Icon="scan-eye"}
 local shop = W:Tab{Title="Buy Items",Icon="shopping-cart"}
@@ -1317,7 +1317,7 @@ infjumpToggle = Tab:Toggle{
 }
 Tab:Section{Title = "Steal Helper"}
 walkButtonToggle = Tab:Toggle{
-    Title   = "Show Walk To Base Button [BETA]",
+    Title   = "Show Walk To Base Button [BETA!!!]",
     Value   = false,
     Config  = "basebutton",
     Desc    = "This not only walk normally but with Automation of Avoidance!",
@@ -1349,7 +1349,7 @@ boostButtonToggle = Tab:Toggle{
 }
 local stealGui
 stealhelping = Tab:Toggle{
-    Title    = "Show Semi Instant Steal Button",
+    Title    = "Semi Instant Steal Button",
     Value    = false,
     Config   = "semiinstant",
     Callback = function(v)
